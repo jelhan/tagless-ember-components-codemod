@@ -495,6 +495,47 @@ foo
 =========="
 `;
 
+exports[`native components handles multiple event handlers correctly 1`] = `
+"==========
+
+      export default class FooComponent extends Component {
+        mouseDown() {
+          console.log('Hello!');
+        }
+
+        mouseUp() {
+          console.log('World!');
+        }
+      }
+    
+~~~~~~~~~~
+foo
+~~~~~~~~~~
+ => tagName: div
+~~~~~~~~~~
+
+      import { tagName } from \\"@ember-decorators/component\\";
+      import { action } from \\"@ember/object\\";
+      @tagName(\\"\\")
+      export default class FooComponent extends Component {
+        @action
+        handleMouseDown() {
+          console.log('Hello!');
+        }
+
+        @action
+        handleMouseUp() {
+          console.log('World!');
+        }
+      }
+    
+~~~~~~~~~~
+<div ...attributes {{on \\"mouseDown\\" this.handleMouseDown}} {{on \\"mouseUp\\" this.handleMouseUp}}>
+  foo
+</div>
+=========="
+`;
+
 exports[`native components handles single \`@classNames\` item correctly 1`] = `
 "==========
 
@@ -518,6 +559,38 @@ foo
     
 ~~~~~~~~~~
 <div class=\\"foo\\" ...attributes>
+  foo
+</div>
+=========="
+`;
+
+exports[`native components handles single event handler correctly 1`] = `
+"==========
+
+      export default class FooComponent extends Component {
+        click() {
+          console.log('Hello World!');
+        }
+      }
+    
+~~~~~~~~~~
+foo
+~~~~~~~~~~
+ => tagName: div
+~~~~~~~~~~
+
+      import { tagName } from \\"@ember-decorators/component\\";
+      import { action } from \\"@ember/object\\";
+      @tagName(\\"\\")
+      export default class FooComponent extends Component {
+        @action
+        handleClick() {
+          console.log('Hello World!');
+        }
+      }
+    
+~~~~~~~~~~
+<div ...attributes {{on \\"click\\" this.handleClick}}>
   foo
 </div>
 =========="
